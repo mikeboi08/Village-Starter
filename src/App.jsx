@@ -17,7 +17,7 @@ const App = () => {
 	const [improvements, setImprovements] = useState([]); //useState for setting improvements on each tile in the map.
 
 	const addImprovement = (improvement) => {
-		//passes improvement to tile that user clicked.
+		//passes improvement from tile that user clicked.
 		setImprovements([...improvements, improvement]); //passes in array of improvements up on line 16.
 		const costs = Object.fromEntries(
 			Object.entries(Improvements[improvement.type].costs).map(

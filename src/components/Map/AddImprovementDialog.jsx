@@ -10,6 +10,7 @@ const AddImprovementDialog = ({
 }) => {
 	const [type, setType] = useState("house");
 	const handleAdd = () => {
+		// compares the cost of the selected improve ment against our current resources
 		if (
 			Object.keys(resources).every(
 				(key) => resources[key] >= Improvements[type].costs[key]
