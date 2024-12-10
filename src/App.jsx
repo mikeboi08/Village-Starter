@@ -19,7 +19,6 @@ const App = () => {
 	const addImprovement = (improvement) => {
 		//passes improvement to tile that user clicked.
 		setImprovements([...improvements, improvement]); //passes in array of improvements up on line 16.
-		console.log([improvement.type]);
 		const costs = Object.fromEntries(
 			Object.entries(Improvements[improvement.type].costs).map(
 				([key, value]) => [key, -value]
