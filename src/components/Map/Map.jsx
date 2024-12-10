@@ -2,6 +2,8 @@ import React from 'react';
 import Tile from './Tile';
 import './styles/Map.css';
 
+// practice tomorrow
+
 const Map = ({ improvements, addImprovement, updateResources, resources }) => {
   const gridSize = 5;
 
