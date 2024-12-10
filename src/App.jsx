@@ -12,7 +12,7 @@ const initialResources = {
 };
 
 const App = () => {
-  const [resources, setResources] = useState(initialResources);
+  const [resources, setResources] = useState(initialResources); // state variable
   const [improvements, setImprovements] = useState([]);
 
   const addImprovement = (improvement) => {
