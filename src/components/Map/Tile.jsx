@@ -4,15 +4,27 @@ import EditImprovementDialog from './EditImprovementDialog';
 import './styles/Tile.css';
 
 const Tile = ({ index, improvement, addImprovement, updateResources, resources }) => {
-  const [isDialogOpen, setDialogOpen] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  // Handle opening the dialog
+  const handleOpenDialog = () => {
+    setIsDialogOpen(true);
+  };
+
+  // Handle closing the dialog box
+  const handleCloseDialog = () => {
+    console.log('Dialog closed');
+    setIsDialogOpen(false);
+  };
 
   return (
-    <div className="tile" onClick={() => setDialogOpen(true)}>
+    <div className="tile" onClick={() => handleOpenDialog(true)}>
       {improvement ? (
         <EditImprovementDialog
           improvement={improvement}
           updateResources={updateResources}
-          closeDialog={() => setDialogOpen(false)}
+          resources={resources}
+          closeDialog={handleCloseDialog}  // This is passed to EditImprovementDialog
         />
       ) : (
         isDialogOpen && (
@@ -20,7 +32,7 @@ const Tile = ({ index, improvement, addImprovement, updateResources, resources }
             index={index}
             addImprovement={addImprovement}
             resources={resources}
-            closeDialog={() => setDialogOpen(false)}
+            onClose={handleCloseDialog}  // Pass handleCloseDialog to AddImprovementDialog as onClose
           />
         )
       )}
