@@ -17,14 +17,14 @@ const App = () => {
 	const [improvements, setImprovements] = useState([]); //useState for setting improvements on each tile in the map.
 
 	const addImprovement = (improvement) => {
-		//passes improvement from tile that user clicked.
+		//passes improvement to tile that user clicked.
 		setImprovements([...improvements, improvement]); //passes in array of improvements up on line 16.
 		const costs = Object.fromEntries(
 			Object.entries(Improvements[improvement.type].costs).map(
 				([key, value]) => [key, -value]
 			)
 		); //Negates the costs from the Improvements object to properly subtract values from the Resources.
-		const benefits = Improvements[improvement.type].benefits; //Access the benefits from adding the Improvemtns
+		const benefits = Improvements[improvement.type].benefits; //Access the benefits from adding the Improvements
 		updateResources(costs); //Subtract costs
 		updateResources(benefits); //Add benefits
 	};

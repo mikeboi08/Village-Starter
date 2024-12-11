@@ -1,22 +1,18 @@
 
 import React, { useState } from "react";
   
- function ContactModal({ setShowModal }) {
-    return (
-      <Overlay onClick={() => setShowModal(false)}>
-        <Modal onClick={(e) => e.stopPropagation()}>
-          {/* Modal Content */}
-            <CancelButton
-              onClick={() => setShowModal(false)}
-            >
-              Cancel
-            </CancelButton>
-        </Modal>
-      </Overlay>
-    );
-  }
+ function DialogModal() {
+  const [showModal, setShowModal] = useState(false);
 
-export default ContactModal;
+  return (
+    <div>
+      <button onClick={() => setShowModal(true)}>Open Modal</button>
+      {showModal && <DialogModal setShowModal={setShowModal} />}
+    </div>
+  );
+}
+
+export default DialogModal;
 
 
 // import React, { useState } from 'react';

@@ -1,59 +1,49 @@
 import React, { useState } from "react";
 import "./styles/AddImprovementDialog.css";
 import { Improvements } from "./Improvements";
-// import CloseDialogBox from "./CloseDialogButton";
 
 const AddImprovementDialog = ({
-	index,
-	addImprovement,
-	resources,
-	closeDialog,
+  index,
+  addImprovement,
+  resources,
+  onClose,  // Expect onClose prop here
 }) => {
+  
 	
-	const [isVisible, setIsVisible] = useState(true);
-	
-	  
-	const [type, setType] = useState("house");
-	const handleAdd = () => {
-		// compares the cost of the selected improve ment against our current resources
-		if (
-			Object.keys(resources).every(
-				(key) => resources[key] >= Improvements[type].costs[key]
-			)
-		) {
-			//Compare resources to requested improvement using .every to compare all values in object
-			addImprovement({ index, type, level: 1 });
-			closeDialog();
-		} else {
-			alert(`You don't have the resources for that!`);
-		}
-	};
+  const [type, setType] = useState("house");
 
-	return (
-		<div className='add-improvement-dialog'>
-			<label>
-				Select Improvement:
-				<select value={type} onChange={(e) => setType(e.target.value)}>
-					<option value='house'>House</option>
-					<option value='field'>Field</option>
-					<option value='pasture'>Pasture</option>
-					<option value='lumberMill'>Lumber Mill</option>
-					<option value='well'>Well</option>
-				</select>
-			</label>
-			<button onClick={handleAdd}>Add</button>
-			{/* <button onClick={closeDialog}>Close</button> */}
-			<button onClick={() => setIsVisible(!isVisible)}>
-			{isVisible ? 'Close' : 'Open'}
-			</button>
-			{isVisible && (
-			<div>
-				
-			</div>
-			)}
-			
-		</div>
-	);
+  const handleAdd = () => {
+    // Compare the cost of the selected improvement against current resources
+    if (
+      Object.keys(resources).every(
+        (key) => resources[key] >= Improvements[type].costs[key]
+      )
+    ) {
+      // Add the improvement and close the dialog
+      addImprovement({ index, type, level: 1 });
+      onClose();  // Ensure onClose is called to close the dialog
+    } else {
+      alert(`You don't have the resources for that!`);
+    }
+  };
+
+  return (
+    <div className="add-improvement-dialog">
+      <label>
+        Select Improvement:
+        <select value={type} onChange={(e) => setType(e.target.value)}>
+          <option value="House">House</option>
+          <option value="field">Field</option>
+          <option value="pasture">Pasture</option>
+          <option value="lumberMill">Lumber Mill</option>
+          <option value="well">Well</option>
+        </select>
+      </label>
+      <button onClick={handleAdd}>Add</button>
+      <button onClick={onClose}>Close</button> 
+    </div>
+  );
+  
 };
 
 export default AddImprovementDialog;
