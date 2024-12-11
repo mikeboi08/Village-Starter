@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import './styles/EditImprovementDialog.css';
-import { Improvements } from './Improvements';
 
 const EditImprovementDialog = ({ improvement, updateResources, resources, closeDialog }) => {
   const [disableUpgrade, setDisableUpgrade] = useState(true); //disable uprading by default.
@@ -20,6 +19,8 @@ const EditImprovementDialog = ({ improvement, updateResources, resources, closeD
 		setDisableUpgrade(false); //Enable user to upgrade improvement.
 	}
 	
+  
+  
 	const handleUpgrade = () => {
 		// TODO: Handle upgrade logic
 		const costs = Object.fromEntries(
@@ -35,9 +36,9 @@ const EditImprovementDialog = ({ improvement, updateResources, resources, closeD
 		// TODO: Handle downgrade logic
 	};
 
-	const handleRemove = () => {
-		// TODO: Handle remove logic
-	};
+  const handleRemove = () => {
+    // TODO: Handle remove logic
+  };
 
 	return (
 		<div className='edit-improvement-dialog'>

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./styles/AddImprovementDialog.css";
 import { Improvements } from "./Improvements";
+// import CloseDialogBox from "./CloseDialogButton";
 
 const AddImprovementDialog = ({
 	index,
@@ -8,6 +9,10 @@ const AddImprovementDialog = ({
 	resources,
 	closeDialog,
 }) => {
+	
+	const [isVisible, setIsVisible] = useState(true);
+	
+	  
 	const [type, setType] = useState("house");
 	const handleAdd = () => {
 		// compares the cost of the selected improve ment against our current resources
@@ -18,7 +23,7 @@ const AddImprovementDialog = ({
 		) {
 			//Compare resources to requested improvement using .every to compare all values in object
 			addImprovement({ index, type, level: 1 });
-			closeDialog;
+			closeDialog();
 		} else {
 			alert(`You don't have the resources for that!`);
 		}
@@ -37,7 +42,16 @@ const AddImprovementDialog = ({
 				</select>
 			</label>
 			<button onClick={handleAdd}>Add</button>
-			<button onClick={closeDialog}>Cancel</button>
+			{/* <button onClick={closeDialog}>Close</button> */}
+			<button onClick={() => setIsVisible(!isVisible)}>
+			{isVisible ? 'Close' : 'Open'}
+			</button>
+			{isVisible && (
+			<div>
+				
+			</div>
+			)}
+			
 		</div>
 	);
 };
