@@ -17,48 +17,6 @@ const AddImprovementDialog = ({
     { type: "Lumber Mill", icon: "/lumbermill.png" },
     { type: "Well", icon: "/well.png" },
   ];
-
-  // Handle improvement selection
-//   const handleAddImprovement = (type) => {
-//     const selectedImprovement = improvementOptions.find(
-//       (improvement) => improvement.type === type
-//     );
-  
-//     addImprovement({
-//       index,
-//       type: selectedImprovement.type,
-//       icon: selectedImprovement.icon, // Include the icon
-//       level: 1,
-//     });
-  
-//     closeDialog(); // Close the dialog
-//   };
-  
-
-//   return (
-//     <div className="add-improvement-dialog">
-//       <h3>Select an Improvement</h3>
-//       <div className="improvement-grid">
-//         {improvementOptions.map((improvement) => (
-//           <button
-//             key={improvement.type}
-//             className="improvement-button"
-//             onClick={() => handleAddImprovement(improvement.type)}
-//           >
-//             <img
-//               src={improvement.icon}
-//               alt={improvement.type}
-//               className="improvement-icon"
-//             />
-//             <span>{improvement.type}</span>
-//           </button>
-//         ))}
-//       </div>
-//       <button className="close-dialog-button" onClick={closeDialog}>
-//         Cancel
-//       </button>
-//     </div>
-//   );
   
 	
   const [type, setType] = useState("house");
@@ -90,6 +48,11 @@ const AddImprovementDialog = ({
           <option value="well">Well</option>
         </select>
       </label>
+      <div>
+        <img src={improvementOptions[type]} />
+        Costs
+        Benefits
+      </div>
       <button onClick={handleAdd}>Add</button>
       <button onClick={onClose}>Close</button> 
     </div>

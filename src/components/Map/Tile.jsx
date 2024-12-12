@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import AddImprovementDialog from "./AddImprovementDialog";
+import EditImprovementDialog from "./EditImprovementDialog";
 import "./styles/Tile.css";
 
 const Tile = ({ index, improvement, addImprovement, updateResources, resources }) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [icon, updateIcon] = useState('');
 
   // Handle opening the dialog
   const handleOpenDialog = () => {
@@ -16,8 +18,13 @@ const Tile = ({ index, improvement, addImprovement, updateResources, resources }
     setIsDialogOpen(false);
   };
 
+  
+    let addClass = "tile";
+		if (improvement) addClass = "tile " + improvement.type;
+    console.log(improvement)
+
   return (
-    <div className="tile" onClick={() => handleOpenDialog(true)}>
+    <div className={addClass} onClick={() => handleOpenDialog(true)}>      
       {improvement ? (
         <EditImprovementDialog
           improvement={improvement}
@@ -25,13 +32,6 @@ const Tile = ({ index, improvement, addImprovement, updateResources, resources }
           resources={resources}
           closeDialog={handleCloseDialog}  // This is passed to EditImprovementDialog
         />
-         <div className="tile-improvement">
-          {/* Display the improvement's icon */}
-          <img src={improvement.icon} alt={improvement.type} className="tile-icon" />
-          {/* Display the improvement's level */}
-          <div className="tile-level">Level {improvement.level}</div>
-          </div>
-
       ) : (
         isDialogOpen && (
           <AddImprovementDialog
@@ -41,7 +41,7 @@ const Tile = ({ index, improvement, addImprovement, updateResources, resources }
             onClose={handleCloseDialog}  // Pass handleCloseDialog to AddImprovementDialog as onClose
           />
         )
-      )}
+      )}      
     </div>
   );
 };
