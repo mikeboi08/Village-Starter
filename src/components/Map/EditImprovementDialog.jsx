@@ -3,26 +3,45 @@ import './styles/EditImprovementDialog.css';
 import { Improvements } from './Improvements';
 
 const EditImprovementDialog = ({ improvement, updateResources, resources, closeDialog }) => {
-  if (!improvement || !resources) {
-    console.error("Invalid props:", { improvement, resources });
-    return null; // Return null if props are invalid to avoid further errors
-  }
+	if (!improvement || !resources) {
+		console.error("Invalid props:", { improvement, resources });
+		return null; // Return null if props are invalid to avoid further errors
+	}
+  
+	const [disableUpgrade, setDisableUpgrade] = useState(true); //disable upgrading by default.
+	const [disableDowngrade, setDisableDowngrade] = useState(false); //disable upgrading by default.
 
-  const [disableUpgrade, setDisableUpgrade] = useState(true); //disable upgrading by default.
+	useEffect(() => {
+		if (!improvement || !Improvements[improvement.type]) return;
+		const costs = Object.fromEntries(
+			Object.entries(Improvements[improvement.type].costs).map(
+				([key, value]) => [key, value * (improvement.level + 1)]
+			)
+		);
 
-  useEffect(() => {
-    if (!improvement || !Improvements[improvement.type]) return;
-    const costs = Object.fromEntries(
-      Object.entries(Improvements[improvement.type].costs).map(([key, value]) => [
-		key, 
-		value * (improvement.level + 1)])
+		setDisableUpgrade(
+			!Object.keys(resources).every((key) => resources[key] >= costs[key])
+		);
+	}, [improvement, resources]); // Re-run when improvement or resources change
+
+	useEffect(() => {
+		if (!improvement || !Improvements[improvement.type]) return;
+		const costs = Object.fromEntries(
+			Object.entries(Improvements[improvement.type].costs).map(
+				([key, value]) => [key, value * (improvement.level)]
+			)
+		);
+
+		setDisableDowngrade(
+			Object.keys(resources).every((key) => resources[key] >= (costs[key] || 0))
     );
-
-    setDisableUpgrade(!Object.keys(resources).every(key => resources[key] >= costs[key]));
+    setDisableDowngrade(improvement.level === 1);
   }, [improvement, resources]); // Re-run when improvement or resources change
+
 
 	const handleUpgrade = (event) => {
 		event.stopPropagation();
+
 		const upCosts = Object.fromEntries(
 			Object.entries(Improvements[improvement.type].costs).map(
 				([key, value]) => [key, -value * (improvement.level + 1)]
@@ -32,8 +51,10 @@ const EditImprovementDialog = ({ improvement, updateResources, resources, closeD
 		improvement.level++;
 	};
 
+
 	const handleDowngrade = (event) => {
 		event.stopPropagation();
+
 		// TODO: Handle downgrade logic
 		const downCosts = Object.fromEntries(//Access improvement level and multiply costs x current level
 			Object.entries(Improvements[improvement.type].costs).map(
@@ -51,8 +72,10 @@ const EditImprovementDialog = ({ improvement, updateResources, resources, closeD
 		improvement.level--;
 	};
 
+
 	const handleRemove = (event) => {
 		event.stopPropagation();
+
     // TODO: Handle remove logic
     const remCosts = Object.fromEntries(
 			//Access improvement level and multiply costs x current level
@@ -70,6 +93,7 @@ const EditImprovementDialog = ({ improvement, updateResources, resources, closeD
     updateResources(remBenefits);
     improvement.level = 0;
     improvement.type = '';
+
     console.log("Calling closeDialog from handleRemove");
 	closeDialog(); // Call closeDialog as a function
 	};
@@ -78,6 +102,7 @@ const EditImprovementDialog = ({ improvement, updateResources, resources, closeD
 		event.stopPropagation();
 		console.log("Calling closeDialog from Close button");
 		closeDialog();
+
 	};
 
 	return (
@@ -90,7 +115,9 @@ const EditImprovementDialog = ({ improvement, updateResources, resources, closeD
 				Downgrade
 			</button>
 			<button onClick={handleRemove}>Remove</button>
+
 			<button onClick={handleClose}>Close</button>
+
 		</div>
 	);
 };
