@@ -50,12 +50,12 @@ const EditImprovementDialog = ({
 	const handleUpgrade = () => {
 		const upCosts = Object.fromEntries(
 			Object.entries(Improvements[improvement.type].costs).map(
-				([key, value]) => [key, -value * (improvement.level + 1)]
+				([key, value]) => [key, value * (improvement.level + 1)]
 			)
 		); //Access improvement level and multiply costs x current level + 1
 		const upBenefits = Object.fromEntries(
 			Object.entries(Improvements[improvement.type].benefits).map(
-				([key, value]) => [key, -value * (improvement.level + 1)]
+				([key, value]) => [key, value * (improvement.level + 1)]
 			)
 		); //Access improvement level and multiply costs x current level + 1
 		updateResources(upCosts);
@@ -68,7 +68,7 @@ const EditImprovementDialog = ({
 		const downCosts = Object.fromEntries(
 			//Access improvement level and multiply costs x current level
 			Object.entries(Improvements[improvement.type].costs).map(
-				([key, value]) => [key, value * improvement.level]
+				([key, value]) => [key, -value * improvement.level]
 			)
 		);
 		const downBenefits = Object.fromEntries(

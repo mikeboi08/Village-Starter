@@ -29,45 +29,54 @@ const AddImprovementDialog = ({
 	);
 	return (
 		<div className='add-improvement-dialog'>
-			<label>
-				Select Improvement:
-				<select value={type} onChange={(e) => setType(e.target.value)}>
-					<option value='House'>House</option>
-					<option value='field'>Field</option>
-					<option value='pasture'>Pasture</option>
-					<option value='lumberMill'>Lumber Mill</option>
-					<option value='well'>Well</option>
-				</select>
-			</label>
-			<div>
-				<img src={Improvements[type].icon} />
-				<div className='details'>
-					<h5>Costs</h5>
-					<div>
-						{Object.entries(filteredImprovements[type].costs).map(
-							([key, value]) => (
-								<p>
-									{key}: {value}{" "}
-								</p>
-							)
-						)}
-					</div>
-				</div>
-				<div className='details'>
-					<h5>Benefits</h5>
-					<div>
-						{Object.entries(filteredImprovements[type].benefits).map(
-							([key, value]) => (
-								<p>
-									{key}: {value}{" "}
-								</p>
-							)
-						)}
-					</div>
-				</div>
+			<div className='select-container'>
+				<label className='styled-label'>
+					Select Improvement:
+					<select
+						className='styled-select'
+						value={type}
+						onChange={(e) => setType(e.target.value)}
+					>
+						<option value='House'>House</option>
+						<option value='field'>Field</option>
+						<option value='pasture'>Pasture</option>
+						<option value='lumberMill'>Lumber Mill</option>
+						<option value='well'>Well</option>
+					</select>
+				</label>
 			</div>
-			<button onClick={handleAdd}>Add</button>
-			<button onClick={onClose}>Close</button>
+			<div className='image-container'>
+				<img className='styled-img' src={Improvements[type].icon} alt={type} />
+			</div>
+			<div className='details'>
+				<h5 className='table-title'>Costs and Benefits</h5>
+				<table className='modern-table'>
+					<thead>
+						<tr>
+							<th></th>
+							<th>Cost</th>
+							<th>Benefit</th>
+						</tr>
+					</thead>
+					<tbody>
+						{Object.keys(filteredImprovements[type].costs).map((key) => (
+							<tr key={key}>
+								<td>{key}</td>
+								<td>{filteredImprovements[type].costs[key]}</td>
+								<td>{filteredImprovements[type].benefits[key]}</td>
+							</tr>
+						))}
+					</tbody>
+				</table>
+			</div>
+			<div className='button-container'>
+				<button className='styled-button add-button' onClick={handleAdd}>
+					Add
+				</button>
+				<button className='styled-button close-button' onClick={onClose}>
+					Close
+				</button>
+			</div>
 		</div>
 	);
 };
