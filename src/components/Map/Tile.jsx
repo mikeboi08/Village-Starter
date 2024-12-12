@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
-import AddImprovementDialog from './AddImprovementDialog';
-import EditImprovementDialog from './EditImprovementDialog';
-import './styles/Tile.css';
+import React, { useState } from "react";
+import AddImprovementDialog from "./AddImprovementDialog";
+import "./styles/Tile.css";
 
 const Tile = ({ index, improvement, addImprovement, updateResources, resources }) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -26,6 +25,13 @@ const Tile = ({ index, improvement, addImprovement, updateResources, resources }
           resources={resources}
           closeDialog={handleCloseDialog}  // This is passed to EditImprovementDialog
         />
+         <div className="tile-improvement">
+          {/* Display the improvement's icon */}
+          <img src={improvement.icon} alt={improvement.type} className="tile-icon" />
+          {/* Display the improvement's level */}
+          <div className="tile-level">Level {improvement.level}</div>
+          </div>
+
       ) : (
         isDialogOpen && (
           <AddImprovementDialog
