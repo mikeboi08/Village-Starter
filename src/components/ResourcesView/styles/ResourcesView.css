@@ -12,7 +12,6 @@ img{
     flex-direction: row;
     border-radius: 5px;
     background-color:dimgray;
-    
     height: 100%;
 }
 
@@ -20,7 +19,7 @@ img{
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    padding: 5px;
+    padding: 10px;
 }
 
 
