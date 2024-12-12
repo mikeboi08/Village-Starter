@@ -7,19 +7,20 @@
   align-items: center;
   background-color: #f0f0f0; /* Light gray background */
   cursor: pointer;
+  border-radius: 5px;
   }
   
   .tile:hover {
   background-color: #ddd; /* Slight hover effect */
   }
-  
+  .dialog-container {
+  position: relative;
+  z-index: 10; /* Ensure it stays on top of other elements */
+  }
   @media screen and (max-width: 768px) {
   .tile {
   width: 40px; /* Reduce tile size for smaller screens */
   height: 40px;
   }
   }
-  
   /* Code below is for desktop */
-  
-  

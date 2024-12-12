@@ -11,8 +11,9 @@ img{
     display: flex;
     flex-direction: row;
     border-radius: 5px;
-    background-color:dimgray;
+    background-color:yellowgreen;
     height: 100%;
+    border: 1px solid black;
 }
 
 .resources-view{
