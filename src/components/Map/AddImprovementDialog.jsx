@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import "./styles/AddImprovementDialog.css";
 import { Improvements } from "./Improvements";
@@ -30,6 +31,7 @@ const AddImprovementDialog = ({
     ) {
       // Add the improvement and close the dialog
       addImprovement({ index, type, level: 1 });
+      
       onClose();  // Ensure onClose is called to close the dialog
     } else {
       alert(`You don't have the resources for that!`);
@@ -37,7 +39,7 @@ const AddImprovementDialog = ({
   };
 
   return (
-    <div className="add-improvement-dialog">
+    <div className="add-improvement-dialog" onClick={(e) => e.stopPropagation()}>
       <label>
         Select Improvement:
         <select value={type} onChange={(e) => setType(e.target.value)}>
@@ -61,4 +63,3 @@ const AddImprovementDialog = ({
 };
 
 export default AddImprovementDialog;
-

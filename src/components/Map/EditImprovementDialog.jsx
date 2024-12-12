@@ -38,7 +38,10 @@ const EditImprovementDialog = ({ improvement, updateResources, resources, closeD
     setDisableDowngrade(improvement.level === 1);
   }, [improvement, resources]); // Re-run when improvement or resources change
 
-	const handleUpgrade = () => {
+
+	const handleUpgrade = (event) => {
+		event.stopPropagation();
+
 		const upCosts = Object.fromEntries(
 			Object.entries(Improvements[improvement.type].costs).map(
 				([key, value]) => [key, -value * (improvement.level + 1)]
@@ -48,7 +51,10 @@ const EditImprovementDialog = ({ improvement, updateResources, resources, closeD
 		improvement.level++;
 	};
 
-	const handleDowngrade = () => {
+
+	const handleDowngrade = (event) => {
+		event.stopPropagation();
+
 		// TODO: Handle downgrade logic
 		const downCosts = Object.fromEntries(//Access improvement level and multiply costs x current level
 			Object.entries(Improvements[improvement.type].costs).map(
@@ -66,7 +72,10 @@ const EditImprovementDialog = ({ improvement, updateResources, resources, closeD
 		improvement.level--;
 	};
 
-	const handleRemove = () => {
+
+	const handleRemove = (event) => {
+		event.stopPropagation();
+
     // TODO: Handle remove logic
     const remCosts = Object.fromEntries(
 			//Access improvement level and multiply costs x current level
@@ -84,7 +93,16 @@ const EditImprovementDialog = ({ improvement, updateResources, resources, closeD
     updateResources(remBenefits);
     improvement.level = 0;
     improvement.type = '';
-    closeDialog;
+
+    console.log("Calling closeDialog from handleRemove");
+	closeDialog(); // Call closeDialog as a function
+	};
+
+	const handleClose = (event) => {
+		event.stopPropagation();
+		console.log("Calling closeDialog from Close button");
+		closeDialog();
+
 	};
 
 	return (
@@ -97,7 +115,9 @@ const EditImprovementDialog = ({ improvement, updateResources, resources, closeD
 				Downgrade
 			</button>
 			<button onClick={handleRemove}>Remove</button>
-			<button onClick={closeDialog}>Close</button>
+
+			<button onClick={handleClose}>Close</button>
+
 		</div>
 	);
 };
