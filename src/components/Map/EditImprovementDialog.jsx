@@ -100,6 +100,7 @@ const EditImprovementDialog = ({
 		updateResources(remBenefits);
 		delete improvement.type;
 		delete improvement.level;
+		delete improvement.index;
 		closeDialog; // Call closeDialog as a function
 	};
 

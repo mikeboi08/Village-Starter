@@ -7,7 +7,8 @@ const Icon = ({ improvement }) => {
     }
     return (
 			<>
-				{improvement ? (
+            {improvement ?
+                improvement.hasOwnProperty('type') && (
 					<div style={container}>
 						<img src={Improvements[improvement.type].icon} />
 						<div className='level'>{improvement.level}</div>
