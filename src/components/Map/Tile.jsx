@@ -1,49 +1,37 @@
 import React, { useState } from "react";
 import AddImprovementDialog from "./AddImprovementDialog";
-import EditImprovementDialog from "./EditImprovementDialog";
 import "./styles/Tile.css";
 
-const Tile = ({ index, improvement, addImprovement, updateResources, resources }) => {
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [icon, updateIcon] = useState('');
 
-  // Handle opening the dialog
-  const handleOpenDialog = () => {
-    setIsDialogOpen(true);
-  };
-
-  // Handle closing the dialog box
-  const handleCloseDialog = () => {
-    console.log('Dialog closed');
-    setIsDialogOpen(false);
-  };
-
-  
-    let addClass = "tile";
-		if (improvement) addClass = "tile " + improvement.type;
-    console.log(improvement)
+const Tile = ({ index, improvement, addImprovement, resources }) => {
+  const [isDialogOpen, setDialogOpen] = useState(false);
 
   return (
-    <div className={addClass} onClick={() => handleOpenDialog(true)}>      
+    <div className="tile" onClick={() => setDialogOpen(true)}>
       {improvement ? (
-        <EditImprovementDialog
-          improvement={improvement}
-          updateResources={updateResources}
-          resources={resources}
-          closeDialog={handleCloseDialog}  // This is passed to EditImprovementDialog
-        />
+        <div className="tile-improvement">
+          {/* Display the improvement's icon */}
+          <img src={improvement.icon} alt={improvement.type} className="tile-icon" />
+          {/* Display the improvement's level */}
+          <div className="tile-level">Level {improvement.level}</div>
+        </div>
       ) : (
         isDialogOpen && (
           <AddImprovementDialog
             index={index}
             addImprovement={addImprovement}
             resources={resources}
-            onClose={handleCloseDialog}  // Pass handleCloseDialog to AddImprovementDialog as onClose
+            closeDialog={() => setDialogOpen(false)}
           />
         )
-      )}      
+      )}
     </div>
   );
 };
 
+
+
+
 export default Tile;
+
+

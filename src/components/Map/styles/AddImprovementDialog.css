@@ -1,10 +1,10 @@
 
 .add-improvement-dialog{
     z-index: 1;
-    background-color: dimgray;
+    background-color: rgb(200, 200, 200);
     border-radius: 5px;
     padding: 5px;
-    
+    border: 1px solid black;
 
 }
 
