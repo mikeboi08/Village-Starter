@@ -43,7 +43,7 @@ const EditImprovementDialog = ({
 		);
 		setDisableDowngrade(improvement.level === 1);
 		setDisableRemove(
-			Object.keys(resources).every((key) => resources[key] >= (costs[key] || 0))
+			Object.keys(resources).every((key) => resources[key] <= (costs[key] || 0))
 		);
 	}, [improvement, resources]); // Re-run when improvement or resources change
 
