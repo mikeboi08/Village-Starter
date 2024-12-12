@@ -21,35 +21,78 @@ const EditImprovementDialog = ({ improvement, updateResources, resources, closeD
     setDisableUpgrade(!Object.keys(resources).every(key => resources[key] >= costs[key]));
   }, [improvement, resources]); // Re-run when improvement or resources change
 
-  const handleUpgrade = () => {
-    const costs = Object.fromEntries(
-      Object.entries(Improvements[improvement.type].costs).map(
-        ([key, value]) => [key, -value * (improvement.level + 1)]
-      )
-    ); //Access improvement level and multiply costs x current level + 1
-    updateResources(costs);
-    improvement.level++; 
-  };
+	const handleUpgrade = (event) => {
+		event.stopPropagation();
+		const upCosts = Object.fromEntries(
+			Object.entries(Improvements[improvement.type].costs).map(
+				([key, value]) => [key, -value * (improvement.level + 1)]
+			)
+		); //Access improvement level and multiply costs x current level + 1
+		updateResources(upCosts);
+		improvement.level++;
+	};
 
-  const handleDowngrade = () => {
-    // TODO: Handle downgrade logic
-  };
+	const handleDowngrade = (event) => {
+		event.stopPropagation();
+		// TODO: Handle downgrade logic
+		const downCosts = Object.fromEntries(//Access improvement level and multiply costs x current level
+			Object.entries(Improvements[improvement.type].costs).map(
+				([key, value]) => [key, value * improvement.level]
+			)
+    ); 
+    const downBenefits = Object.fromEntries(
+			//Access improvement level and multiply costs x current level
+			Object.entries(Improvements[improvement.type].benefits).map(
+				([key, value]) => [key, -value * improvement.level]
+			)
+		); 
+		updateResources(downCosts);
+		updateResources(downBenefits);
+		improvement.level--;
+	};
 
-  const handleRemove = () => {
+	const handleRemove = (event) => {
+		event.stopPropagation();
     // TODO: Handle remove logic
-  };
+    const remCosts = Object.fromEntries(
+			//Access improvement level and multiply costs x current level
+			Object.entries(Improvements[improvement.type].costs).map(
+				([key, value]) => [key, value * improvement.level]
+			)
+		);
+		const remBenefits = Object.fromEntries(
+			//Access improvement level and multiply costs x current level
+			Object.entries(Improvements[improvement.type].benefits).map(
+				([key, value]) => [key, -value * improvement.level]
+			)
+    );
+    updateResources(remCosts);
+    updateResources(remBenefits);
+    improvement.level = 0;
+    improvement.type = '';
+    console.log("Calling closeDialog from handleRemove");
+	closeDialog(); // Call closeDialog as a function
+	};
 
-  return (
-    <div className='edit-improvement-dialog'>
-      <h3>{improvement.type}</h3>
-      <button disabled={disableUpgrade} onClick={handleUpgrade}> 
-        Upgrade
-      </button>
-      <button onClick={handleDowngrade}>Downgrade</button>
-      <button onClick={handleRemove}>Remove</button>
-      <button onClick={closeDialog}>Close</button>
-    </div>
-  );
+	const handleClose = (event) => {
+		event.stopPropagation();
+		console.log("Calling closeDialog from Close button");
+		closeDialog();
+	};
+
+	return (
+		<div className='edit-improvement-dialog'>
+			<h3>{improvement.type}</h3>
+			<button disabled={disableUpgrade} onClick={handleUpgrade}>
+				Upgrade
+			</button>
+			<button disabled={disableDowngrade} onClick={handleDowngrade}>
+				Downgrade
+			</button>
+			<button onClick={handleRemove}>Remove</button>
+			<button onClick={handleClose}>Close</button>
+		</div>
+	);
 };
 
 export default EditImprovementDialog;
