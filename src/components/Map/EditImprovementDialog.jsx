@@ -17,6 +17,20 @@ const EditImprovementDialog = ({
 	const [disableDowngrade, setDisableDowngrade] = useState(false); //disable upgrading by default.
 	const [disableRemove, setDisableRemove] = useState(false); //disable Remove is resource will be zero
 
+	const remove = Object.fromEntries(
+		Object.entries(Improvements[improvement.type].costs).map(
+			([key, value]) => [key, value * (improvement.level)]
+		)
+	);
+	console.log(remove)
+
+	const upgrades = Object.fromEntries(
+		Object.entries(Improvements[improvement.type].costs).map(
+			([key, value]) => [key, -value * (improvement.level + 1)]
+		)
+	);
+	console.log(upgrades)
+
 	useEffect(() => {
 		if (!improvement || !Improvements[improvement.type]) return;
 		const costs = Object.fromEntries(
@@ -107,7 +121,35 @@ const EditImprovementDialog = ({
 	return (
 		<div className='edit-improvement-dialog'>
 			<h3>{improvement.type}</h3>
-			<button disabled={disableUpgrade} onClick={handleUpgrade}>
+			
+			<div className='image-container'>
+							<img className='styled-img' src={Improvements[improvement.type].icon} alt={improvement.type} />
+						</div>
+						<div className='details'>
+							<h5 className='table-title'>Costs and Benefits</h5>
+							<table className='modern-table'>
+								<thead>
+									<tr>
+										<th></th>
+										<th> Upgrade to Level {improvement.level + 1}</th>
+										<th>Remove</th>
+									</tr>
+								</thead>
+								<tbody>
+									{Object.keys(upgrades).map((key) => (
+										<tr key={key}>
+											<td>{key}</td>
+											<td>{upgrades[key]}</td>
+											<td>{remove[key]}</td>
+										</tr>
+									))}
+								</tbody>
+							</table>
+						</div>
+						<div className='button-container'>
+					
+							
+							<button className='styled-button add-button' disabled={disableUpgrade} onClick={handleUpgrade}>
 				Upgrade
 			</button>
 			<button disabled={disableDowngrade} onClick={handleDowngrade}>
@@ -116,7 +158,8 @@ const EditImprovementDialog = ({
 			<button disabled={disableRemove} onClick={handleRemove}>
 				Remove
 			</button>
-			<button onClick={closeDialog}>Close</button>
+			<button className='styled-button close-button' onClick={closeDialog}>Close</button>
+						</div>
 		</div>
 	);
 };
